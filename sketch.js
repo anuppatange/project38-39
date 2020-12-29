@@ -19,12 +19,12 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(500, 400);
+  createCanvas(600, 400);
 
   //background
-  bg = createSprite(200, 150);
+  bg = createSprite(100,100,1200,400);
   bg.addImage("bgimg", bgimg);
-  bg.scale = 1.2
+  bg.scale = 1.5
 
   //invisible ground
   invground = createSprite(width / 2, 390, width, 10);
@@ -41,9 +41,10 @@ function setup() {
   score = 0;
 
   //gamestates
-  gamestate = 1;
   PLAY = 1;
   END = 0;
+  gamestate = PLAY;
+
 
   //groups for obstacle and bananas
   bananagrp = createGroup();
@@ -57,9 +58,9 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background("yellow");
 
-
+  drawSprites();
   //gamestate=PLAY
   if (gamestate === PLAY) {
     
@@ -106,6 +107,12 @@ function draw() {
     
     monkey.changeAnimation("collided",collided);
 
+    fill("blue");
+    textSize(22);
+    stroke(0);
+    strokeWeight(2);
+    text("Game Over!",30,70);
+    text("Press R to Restart",50,10);
   }
 
   //restart
@@ -143,27 +150,26 @@ function draw() {
   if (stonegrp.isTouching(monkey)) {
     stonegrp.destroyEach();
     monkey.scale = 0.13;
-    score = score - 100;
     col += 1;
   }
   camera.x=monkey.x;
   camera.y=400;
-  drawSprites();
+
 
   //If gamestate is End, add text
   if (gamestate === END) {
-
-    fill(0,0,0);
+    console.log("GAME ENDED");
+    fill("blue");
     textSize(22);
     stroke(0);
     strokeWeight(2);
     text("Game Over!",30,70);
-    text("Press R to Restart",50,10);
+    text("Press R to Restart",0,200);
   }
 
   fill("Black");
   textSize(22);
   stroke("white");
   strokeWeight(2);
-  text("Score: " + score, 40, height / 8);
+  text("Score: " + score, 250,300);
 }
